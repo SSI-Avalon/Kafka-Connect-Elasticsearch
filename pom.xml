@@ -47,14 +47,43 @@
         <test.containers.version>1.11.4</test.containers.version>
         <kafka.connect.maven.plugin.version>0.11.1</kafka.connect.maven.plugin.version>
     </properties>
-
     <repositories>
         <repository>
             <id>confluent</id>
             <name>Confluent</name>
             <url>http://packages.confluent.io/maven/</url>
         </repository>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <id>servicesource-libs-all</id>
+            <name>ServiceSource All libraries Repository</name>
+            <url>http://artifactory.dev.ssi-cloud.com/artifactory/libs-all/</url>
+            <layout>default</layout>
+        </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+            <id>servicesource-plugins-libs-all</id>
+            <name>ServiceSource All libraries Repository</name>
+            <url>http://artifactory.dev.ssi-cloud.com/artifactory/libs-all/</url>
+            <layout>default</layout>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
          <dependency>
