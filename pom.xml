@@ -250,10 +250,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <inherited>true</inherited>
                 <configuration>
-                    <compilerArgs>
-                        <arg>-Xlint:all,-try</arg>
-                        <arg>-Werror</arg>
-                    </compilerArgs>
+                   <source>1.8</source>
+                   <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
