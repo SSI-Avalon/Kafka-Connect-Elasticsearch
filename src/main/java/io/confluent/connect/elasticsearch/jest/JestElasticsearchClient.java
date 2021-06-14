@@ -73,6 +73,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.net.ssl.SSLContext;
 
@@ -155,6 +156,7 @@ public class JestElasticsearchClient implements ElasticsearchClient {
               config.getLong(ElasticsearchSinkConnectorConfig.RETRY_BACKOFF_MS_CONFIG);
       this.maxRetries = config.getInt(ElasticsearchSinkConnectorConfig.MAX_RETRIES_CONFIG);
       this.timeout = config.getInt(ElasticsearchSinkConnectorConfig.READ_TIMEOUT_MS_CONFIG);
+      
     } catch (IOException e) {
       throw new ConnectException(
           "Couldn't start ElasticsearchSinkTask due to connection error:",
@@ -174,7 +176,8 @@ public class JestElasticsearchClient implements ElasticsearchClient {
         ElasticsearchSinkConnectorConfig.CONNECTION_TIMEOUT_MS_CONFIG);
     final int readTimeout = config.getInt(
         ElasticsearchSinkConnectorConfig.READ_TIMEOUT_MS_CONFIG);
-
+    final int maxIdleTime = config.getInt(
+        ElasticsearchSinkConnectorConfig.MAX_CONNECTION_IDLE_TIME_MS_CONFIG);
     final String username = config.getString(
         ElasticsearchSinkConnectorConfig.CONNECTION_USERNAME_CONFIG);
     final Password password = config.getPassword(
@@ -194,6 +197,7 @@ public class JestElasticsearchClient implements ElasticsearchClient {
             .readTimeout(readTimeout)
             .requestCompressionEnabled(compressionEnabled)
             .defaultMaxTotalConnectionPerRoute(maxInFlightRequests)
+            .maxConnectionIdleTime(maxIdleTime, TimeUnit.MILLISECONDS)
             .multiThreaded(true);
     if (username != null && password != null) {
       builder.defaultCredentials(username, password.value())
